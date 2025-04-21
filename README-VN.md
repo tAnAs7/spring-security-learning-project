@@ -72,8 +72,27 @@ Sau khi hoàn thành các branch trên, chúng ta sẽ tổng hợp toàn bộ t
 - Đọc tài liệu hướng dẫn trong mỗi branch để hiểu cách triển khai.
 - Chạy ứng dụng và kiểm tra các tính năng bảo mật đã tích hợp.
 
-💡 **Hãy bắt đầu với branch `basic-security-setup` và dần dần triển khai các tính năng phức tạp hơn.** 
+## ⚙️ **Yêu cầu tiên quyết**
+Trước khi bắt đầu, bạn cần chuẩn bị một số công cụ và thư viện sau:
+- **Java 17+** (*khuyến nghị sử dụng OpenJDK 17 hoặc cao hơn*)
+- **Maven** (*quản lý dependencies*)
+- **Spring Boot 3.x** (*cấu trúc dự án dựa trên phiên bản mới nhất*)
+- **IntelliJ IDEA**
+- **Docker** (*nếu muốn chạy database hoặc dịch vụ authentication trong container*)
+- **PostgreSQL** (*tùy chọn nếu dùng database cho UserDetailsService*)
+- **Postman** (*để test API security*)
 
+## 🚀 **Bắt đầu dự án**
+```bash
+git clone https://github.com/tAnAs7/spring-security-learning-project.git
+cd spring-security-learning-project
+```
+
+💡 **Hãy bắt đầu với branch `basic-security-setup` và dần dần triển khai các tính năng phức tạp hơn.**
+
+```bash
+git checkout basic-security-setup
+```
 ---
 
 🚀 **Bắt đầu học Spring Security ngay hôm nay!**
