@@ -17,7 +17,12 @@ public class SecurityConfig {
                         .requestMatchers("/api/protected").authenticated()
                         .anyRequest().permitAll()
                 )
-                .formLogin(Customizer.withDefaults()); // Replacement for httpBasic()
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/api/protected", true)
+                        .permitAll()
+                );
+
         return http.build();
     }
 }
