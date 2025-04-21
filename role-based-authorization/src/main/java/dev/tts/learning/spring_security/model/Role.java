@@ -1,2 +1,5 @@
-package dev.tts.learning.spring_security.model;public class Role {
+package dev.tts.learning.spring_security.model;
+
+public enum Role {
+    USER, ADMIN
 }

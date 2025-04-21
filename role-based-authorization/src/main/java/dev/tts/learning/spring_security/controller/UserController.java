@@ -1,14 +1,13 @@
 package dev.tts.learning.spring_security.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/admin")
-public class AdminController {
-    @GetMapping("/dashboard")
-    public String adminDashboard() {
-        return "Chào mừng ADMIN! Đây là trang dashboard của bạn.";
+@Controller
+public class UserController {
+    @GetMapping("user/profile")
+    public String userProfilePage() {
+//        return "Chào mừng USER! Đây là trang hồ sơ của bạn.";
+        return "user_profile";
     }
 }
