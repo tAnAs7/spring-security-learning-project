@@ -1,8 +1,10 @@
 package dev.tts.learning.spring_security.service.impl;
 
 import dev.tts.learning.spring_security.model.RefreshToken;
+import dev.tts.learning.spring_security.model.enums.TokenStatus;
 import dev.tts.learning.spring_security.repository.RefreshTokenRepository;
 import dev.tts.learning.spring_security.service.RefreshTokenService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -10,39 +12,43 @@ import java.util.Date;
 @Service
 public class RefreshTokenServiceImpl implements RefreshTokenService {
 
-    private final RefreshTokenRepository tokenRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    public RefreshTokenServiceImpl(RefreshTokenRepository tokenRepository) {
-        this.tokenRepository = tokenRepository;
+    public RefreshTokenServiceImpl(RefreshTokenRepository refreshTokenRepository) {
+        this.refreshTokenRepository = refreshTokenRepository;
     }
 
     @Override
     public void saveOrUpdate(String username, String token, long expiryMillis) {
-        tokenRepository.findByUsername(username).ifPresentOrElse(existing -> {
+        refreshTokenRepository.findByUsername(username).ifPresentOrElse(existing -> {
             existing.setToken(token);
             existing.setExpiryDate(new Date(System.currentTimeMillis() + expiryMillis));
-            tokenRepository.save(existing);
+            refreshTokenRepository.save(existing);
         }, () -> {
-            RefreshToken newToken = new RefreshToken(username, token, new Date(System.currentTimeMillis() + expiryMillis));
-            tokenRepository.save(newToken);
+            RefreshToken newToken = new RefreshToken(username, token, new Date(System.currentTimeMillis() + expiryMillis), TokenStatus.active.name());
+            refreshTokenRepository.save(newToken);
         });
     }
 
     @Override
     public boolean exists(String username, String token) {
-        return tokenRepository.findByUsername(username)
+        return refreshTokenRepository.findByUsername(username)
                 .map(stored -> stored.getToken().equals(token) && stored.getExpiryDate().after(new Date()))
                 .orElse(false);
     }
 
-    @Override
-    public void deleteByToken(String token) {
-        tokenRepository.deleteByToken(token);
+    @Transactional
+    public void revokeToken(String token) {
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(token)
+                .orElseThrow(() -> new RuntimeException("Token not found"));
+
+        refreshToken.setStatus(TokenStatus.revoked.name());
+        refreshTokenRepository.save(refreshToken);
     }
 
     @Override
     public void deleteByUsername(String username) {
-        tokenRepository.deleteByUsername(username);
+        refreshTokenRepository.deleteByUsername(username);
     }
 }
 

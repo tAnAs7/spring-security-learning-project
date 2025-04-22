@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Đăng nhập</title>
+    <title>Đăng ký</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-<div class="login-container">
-    <h2>Đăng nhập vào hệ thống</h2>
-    <form th:action="@{/login}" method="post">
+<div class="signup-container">
+    <h2>Đăng ký vào hệ thống</h2>
+    <form th:action="@{/signup}" method="post">
         <label for="username">Tên đăng nhập:</label>
         <input type="text" id="username" name="username" required>
 
         <label for="password">Mật khẩu:</label>
         <input type="password" id="password" name="password">
 
-        <button type="submit">Đăng nhập</button>
+        <label for="password">Nhập lại mật khẩu:</label>
+        <input type="password" id="retype_password" name="retype_password">
+
+        <button type="submit">Đăng ký</button>
     </form>
-    <a th:href="@{/signup}">Đăng ký</a>
     <div th:if="${param.error}">
         <p style="color: red;">Sai tên đăng nhập hoặc mật khẩu!</p>
     </div>

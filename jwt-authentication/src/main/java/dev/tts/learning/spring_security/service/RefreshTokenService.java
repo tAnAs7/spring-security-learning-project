@@ -5,7 +5,7 @@ public interface RefreshTokenService {
 
     boolean exists(String username, String token);
 
-    void deleteByToken(String token);
+    void revokeToken(String token);
 
     void deleteByUsername(String username);
 }

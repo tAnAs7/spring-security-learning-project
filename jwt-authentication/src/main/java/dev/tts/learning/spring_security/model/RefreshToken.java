@@ -26,10 +26,13 @@ public class RefreshToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiryDate;
 
-    public RefreshToken(String username, String token, Date expiryDate) {
+    private String status;
+
+    public RefreshToken(String username, String token, Date expiryDate, String status) {
         this.username = username;
         this.token = token;
         this.expiryDate = expiryDate;
+        this.status = status;
     }
 }
 
