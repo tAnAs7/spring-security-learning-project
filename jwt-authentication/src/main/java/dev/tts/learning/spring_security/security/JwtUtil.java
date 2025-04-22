@@ -14,18 +14,29 @@ import java.util.Date;
 
 public class JwtUtil {
     private static final String SECRET_KEY = "your-secret-key-your-secret-key-your-secret-key";
-    private static final long EXPIRATION_TIME = 86400000L; // 1 day
+    public static final long ACCESS_TOKEN_EXPIRATION_TIME = 15 * 60 * 1000L; // 15 minutes
+    public static final long REFRESH_TOKEN_EXPIRATION_TIME = 7 * 24 * 60 * 60 * 1000L; // 7 days
 
     private static final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
-    public static String generateToken(String username, String role) {
+    public static String generateAccessToken(String username, String role) {
         JwtBuilder builder = Jwts.builder();
         return builder
                 .subject(username)
                 .claim("role", role)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .expiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
                 .signWith(key) // ✅ dùng Signature enum mới
+                .compact();
+    }
+
+    public static String generateRefreshToken(String username) {
+        JwtBuilder builder = Jwts.builder();
+        return builder
+                .subject(username)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME)) // 7 ngày
+                .signWith(key)
                 .compact();
     }
 
