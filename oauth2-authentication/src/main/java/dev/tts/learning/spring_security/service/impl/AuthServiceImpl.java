@@ -51,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
         UserEntity user = UserEntity.builder()
                 .username(username)
                 .password(hashed)
-                .role("USER") // default role
+                .role("user") // default role
                 .build();
         UserInfoEntity userInfo = UserInfoEntity.builder()
                 .username(username)
